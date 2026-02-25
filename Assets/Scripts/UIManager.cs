@@ -2,21 +2,26 @@ using UnityEngine;
 using UnityEngine.UI;
 
 ///<summary>
-/// Управление пользовательским интерфейсом: отображение позиции игрока.
+/// Управление пользовательским интерфейсом: отображение позиции игрока и счёта.
 ///</summary>
 public class UIManager : MonoBehaviour
 {
     [Header("UI Elements")]
-    [SerializeField] private Text positionText;
+    [SerializeField] private Text scoreText;      // Текст для отображения счёта
+    [SerializeField] private Text positionText;   // Текст для отображения координат
 
     [Header("Player Reference")]
-    [SerializeField] private Transform player;
+    [SerializeField] private Transform player;    // Ссылка на игрока
 
+    // Цвета для визуальной обратной связи
     private Color defaultColor = Color.white;
     private Color warningColor = Color.yellow;
 
+    private int currentScore = 0; // Текущий счёт
+
     private void Start()
     {
+        // Проверка наличия ссылок
         if (positionText == null)
         {
             Debug.LogWarning("UIManager: positionText не назначен в инспекторе!");
@@ -25,28 +30,39 @@ public class UIManager : MonoBehaviour
         {
             Debug.LogWarning("UIManager: player не назначен в инспекторе!");
         }
+        if (scoreText == null)
+        {
+            Debug.LogWarning("UIManager: scoreText не назначен в инспекторе!");
+        }
+
+        // Инициализация счёта
+        UpdateScoreUI();
     }
 
     private void Update()
     {
+        // Обновление позиции игрока в реальном времени
         UpdatePlayerPosition();
     }
 
+    ///<summary>
+    /// Обновляет текст с координатами игрока
+    ///</summary>
     private void UpdatePlayerPosition()
     {
         if (player != null && positionText != null)
         {
             Vector3 pos = player.position;
 
-            // Форматируем каждую координату отдельно с 1 знаком после запятой
+            // Форматируем каждую координату отдельно
             string x = pos.x.ToString("F1");
             string y = pos.y.ToString("F1");
             string z = pos.z.ToString("F1");
 
-            // Отображаем все три координаты в удобочитаемом формате
+            // Отображаем все три координаты
             positionText.text = $"Pos: X:{x} Y:{y} Z:{z}";
 
-            // Цвет меняется при высоком прыжке
+            // Визуальная обратная связь: если игрок высоко — меняем цвет
             if (pos.y > 2.0f)
             {
                 positionText.color = warningColor;
@@ -55,6 +71,26 @@ public class UIManager : MonoBehaviour
             {
                 positionText.color = defaultColor;
             }
+        }
+    }
+
+    ///<summary>
+    /// Увеличивает счёт на указанное количество очков и обновляет интерфейс.
+    ///</summary>
+    public void AddScore(int amount)
+    {
+        currentScore += amount;
+        UpdateScoreUI();
+    }
+
+    ///<summary>
+    /// Обновляет текстовое поле счёта
+    ///</summary>
+    private void UpdateScoreUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = $"Coins: {currentScore}";
         }
     }
 }
