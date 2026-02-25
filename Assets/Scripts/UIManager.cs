@@ -93,4 +93,21 @@ public class UIManager : MonoBehaviour
             scoreText.text = $"Coins: {currentScore}";
         }
     }
+
+    ///<summary>
+    /// Отображает сообщение о победе на экране.
+    ///</summary>
+    public void ShowVictoryMessage()
+    {
+        // Создаём временное сообщение о победе
+        if (scoreText != null)
+        {
+            scoreText.text = "ПОБЕДА! ";
+            scoreText.color = Color.green;
+            scoreText.fontSize = 48;
+        }
+
+        // Опционально: можно создать отдельный текстовый объект для победы
+        Debug.Log("Победа отображена на экране!");
+    }
 }

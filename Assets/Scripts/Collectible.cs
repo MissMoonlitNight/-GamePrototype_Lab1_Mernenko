@@ -26,6 +26,12 @@ public class Collectible : MonoBehaviour
                 ui.AddScore(scoreValue);
             }
 
+            // Уведомляем менеджер монет о сборе
+            if (CoinManager.Instance != null)
+            {
+                CoinManager.Instance.OnCoinCollected();
+            }
+
             // Создание эффекта подбора, если префаб задан
             if (pickupEffect != null)
             {
