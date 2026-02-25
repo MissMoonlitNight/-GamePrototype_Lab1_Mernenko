@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        // Нормализованный вектор направления движения (исключаем диагональное ускорение)
         Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
 
         // Перемещение объекта в мировом пространстве (трансформационный подход)
@@ -54,9 +53,9 @@ public class PlayerController : MonoBehaviour
         // Обработка прыжка: только при нажатии кнопки и наличии земли под ногами
         if (Input.GetButtonDown("Jump") && isGrounded && rb != null)
         {
-            // Сброс вертикальной скорости для стабильной высоты прыжка
+            
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            // Применение импульса вверх (физический подход)
+            
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
