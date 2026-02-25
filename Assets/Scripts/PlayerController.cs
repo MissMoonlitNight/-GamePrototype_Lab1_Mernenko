@@ -2,7 +2,6 @@ using UnityEngine;
 
 ///<summary>
 /// Управление игроком: перемещение через Transform, прыжок через физику.
-/// Соответствует методическим указаниям к лабораторной работе №1.
 ///</summary>
 public class PlayerController : MonoBehaviour
 {
